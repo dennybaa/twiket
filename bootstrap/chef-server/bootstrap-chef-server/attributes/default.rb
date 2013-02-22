@@ -1,0 +1,1 @@
+default['bootstrap']['type'] = :erchef
