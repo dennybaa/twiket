@@ -13,3 +13,7 @@
 load_attributes_from_env(node['bootstrap']['type'])
 
 include_recipe "chef-server"
+
+if node['bootstrap']['type'].to_sym = :solr
+  include_recipe "bootstrap-chef-server::configure_rabbitmq"
+end
