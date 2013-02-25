@@ -9,11 +9,12 @@
 
 ::Chef::Recipe.send(:include, BootStrap)
 
+# We support spit ChefInstall (erchef and solr nodes)
+# ---------------------------------------------------
+
 # Build chef_server cookbook attributes
 load_attributes_from_env(node['bootstrap']['type'])
+node.normal['chef-server']['api_fqdn'] = ENV['CHEF_API_FQDN']
 
 include_recipe "chef-server"
-
-if node['bootstrap']['type'].to_sym == :solr
-  include_recipe "bootstrap-chef-server::configure_rabbitmq"
-end
+include_recipe "bootstrap-chef-server::configure_rabbitmq" if node['bootstrap']['type'].to_sym == :solr

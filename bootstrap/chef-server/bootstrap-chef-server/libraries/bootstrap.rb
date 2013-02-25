@@ -28,7 +28,9 @@ module BootStrap
     conf_units.each do |u|
       uprefix = u.sub(/-/, '_').upcase
       ENV.select {|k, v| k.start_with?(uprefix) }.each do |opt, val|
-        node.normal['chef-server']['configuration'][u][opt.sub(/^#{uprefix}_/,'').downcase] = val
+        if not val.empty?
+          node.normal['chef-server']['configuration'][u][opt.sub(/^#{uprefix}_/,'').downcase] = val
+        end
       end
     end
   end
